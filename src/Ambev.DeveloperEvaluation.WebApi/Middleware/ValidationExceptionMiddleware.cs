@@ -1,24 +1,16 @@
 ﻿using FluentValidation;
 using System.Text.Json;
 using Ambev.DeveloperEvaluation.WebApi.Common;
-using Ambev.DeveloperEvaluation.Common.Validation;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Middleware;
 
-public class ValidationExceptionMiddleware
+public class ValidationExceptionMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ValidationExceptionMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (ValidationException ex)
         {
@@ -36,7 +28,6 @@ public class ValidationExceptionMiddleware
             Success = false,
             Message = "Validation Failed",
             Errors = exception.Errors
-                .Select(error => (ValidationErrorDetail)error)
         };
 
         var jsonOptions = new JsonSerializerOptions
