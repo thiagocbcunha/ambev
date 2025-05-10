@@ -1,6 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+﻿using FluentValidation;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
-using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 
