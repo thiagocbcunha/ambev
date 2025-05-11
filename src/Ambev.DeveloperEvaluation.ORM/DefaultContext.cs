@@ -1,8 +1,8 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
+using Microsoft.EntityFrameworkCore.Design;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.ORM;
 
@@ -11,8 +11,7 @@ public class DefaultContext : DbContext
     public DbSet<User> Users { get; set; }
 
     public DefaultContext(DbContextOptions<DefaultContext> options) : base(options)
-    {
-    }
+    {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

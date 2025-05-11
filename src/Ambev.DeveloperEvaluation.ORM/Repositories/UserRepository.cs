@@ -6,20 +6,11 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
 /// <summary>
 /// Implementation of IUserRepository using Entity Framework Core
+/// Initializes a new instance of UserRepository
 /// </summary>
-public class UserRepository : IUserRepository
-{
-    private readonly DefaultContext _context;
-
-    /// <summary>
-    /// Initializes a new instance of UserRepository
-    /// </summary>
-    /// <param name="context">The database context</param>
-    public UserRepository(DefaultContext context)
-    {
-        _context = context;
-    }
-
+/// <param name="context">The database context</param>
+public class UserRepository(DefaultContext context) : IUserRepository
+{    
     /// <summary>
     /// Creates a new user in the database
     /// </summary>
@@ -28,8 +19,8 @@ public class UserRepository : IUserRepository
     /// <returns>The created user</returns>
     public async Task<User> CreateAsync(User user, CancellationToken cancellationToken = default)
     {
-        await _context.Users.AddAsync(user, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.Users.AddAsync(user, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
         return user;
     }
 
@@ -41,7 +32,7 @@ public class UserRepository : IUserRepository
     /// <returns>The user if found, null otherwise</returns>
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.Users.FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
+        return await context.Users.FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +43,7 @@ public class UserRepository : IUserRepository
     /// <returns>The user if found, null otherwise</returns>
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
-        return await _context.Users
+        return await context.Users
             .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
@@ -68,8 +59,8 @@ public class UserRepository : IUserRepository
         if (user == null)
             return false;
 
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync(cancellationToken);
+        context.Users.Remove(user);
+        await context.SaveChangesAsync(cancellationToken);
         return true;
     }
 }
