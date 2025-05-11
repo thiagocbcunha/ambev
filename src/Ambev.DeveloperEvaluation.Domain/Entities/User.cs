@@ -61,6 +61,16 @@ public class User : BaseEntity, IUser
     public DateTime? UpdatedAt { get; set; }
 
     /// <summary>
+    /// Collection of sales associated with the user.
+    /// </summary>
+    public ICollection<Sale> SallerTransactions { get; private set; } = [];
+
+    /// <summary>
+    /// Collection of sales associated with the user.
+    /// </summary>
+    public ICollection<Sale> CustomerTransactions { get; private set; } = [];
+
+    /// <summary>
     /// Gets the unique identifier of the user.
     /// </summary>
     /// <returns>The user's ID as a string.</returns>
@@ -142,5 +152,28 @@ public class User : BaseEntity, IUser
     {
         Status = UserStatus.Suspended;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Validates if the user is a seller and active.
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
+    public void ThrowIfIsInvalidSeller()
+    {
+        if (Role != UserRole.Seller)
+            throw new InvalidOperationException("User is not a seller.");
+
+        if (Status != UserStatus.Active)
+            throw new InvalidOperationException("User is not active.");
+    }
+
+    /// <summary>
+    /// Validates if the user is a customer and active.
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
+    public void ThrowIfIsInvalidCustomer()
+    {
+        if (Status != UserStatus.Active)
+            throw new InvalidOperationException("User is not active.");
     }
 }

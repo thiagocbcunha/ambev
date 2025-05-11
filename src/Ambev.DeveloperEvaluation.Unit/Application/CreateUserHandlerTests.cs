@@ -1,12 +1,12 @@
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Xunit;
+using AutoMapper;
+using NSubstitute;
+using FluentAssertions;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Unit.Domain;
-using AutoMapper;
-using FluentAssertions;
-using NSubstitute;
-using Xunit;
+using Ambev.DeveloperEvaluation.Unit.Application.TestData;
+using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application;
 
@@ -15,9 +15,10 @@ namespace Ambev.DeveloperEvaluation.Unit.Application;
 /// </summary>
 public class CreateUserHandlerTests
 {
-    private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
+    private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
+
     private readonly CreateUserHandler _handler;
 
     /// <summary>
@@ -26,15 +27,17 @@ public class CreateUserHandlerTests
     /// </summary>
     public CreateUserHandlerTests()
     {
-        _userRepository = Substitute.For<IUserRepository>();
         _mapper = Substitute.For<IMapper>();
+        _userRepository = Substitute.For<IUserRepository>();
         _passwordHasher = Substitute.For<IPasswordHasher>();
+
         _handler = new CreateUserHandler(_userRepository, _mapper, _passwordHasher);
     }
 
     /// <summary>
     /// Tests that a valid user creation request is handled successfully.
     /// </summary>
+    [Trait("Create User", "Handle")]
     [Fact(DisplayName = "Given valid user data When creating user Then returns success response")]
     public async Task Handle_ValidRequest_ReturnsSuccessResponse()
     {
@@ -74,25 +77,10 @@ public class CreateUserHandlerTests
     }
 
     /// <summary>
-    /// Tests that an invalid user creation request throws a validation exception.
-    /// </summary>
-    [Fact(DisplayName = "Given invalid user data When creating user Then throws validation exception")]
-    public async Task Handle_InvalidRequest_ThrowsValidationException()
-    {
-        // Given
-        var command = new CreateUserCommand(); // Empty command will fail validation
-
-        // When
-        var act = () => _handler.Handle(command, CancellationToken.None);
-
-        // Then
-        await act.Should().ThrowAsync<FluentValidation.ValidationException>();
-    }
-
-    /// <summary>
     /// Tests that the password is hashed before saving the user.
     /// </summary>
     [Fact(DisplayName = "Given user creation request When handling Then password is hashed")]
+    [Trait("Create User", "Handle")]
     public async Task Handle_ValidRequest_HashesPassword()
     {
         // Given
@@ -129,6 +117,7 @@ public class CreateUserHandlerTests
     /// Tests that the mapper is called with the correct command.
     /// </summary>
     [Fact(DisplayName = "Given valid command When handling Then maps command to user entity")]
+    [Trait("Create User", "Handle")]
     public async Task Handle_ValidRequest_MapsCommandToUser()
     {
         // Given

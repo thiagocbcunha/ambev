@@ -21,12 +21,13 @@ try
     builder.RegisterDependencies();
 
     var app = builder.Build();
-    app.UseMiddleware<ValidationExceptionMiddleware>();
+    app.UseMiddleware<ExceptionMiddleware>();
 
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.ConfigureMigration();
     }
 
     app.UseHttpsRedirection();
