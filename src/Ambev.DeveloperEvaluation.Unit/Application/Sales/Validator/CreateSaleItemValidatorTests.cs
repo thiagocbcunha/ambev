@@ -43,10 +43,10 @@ public class CreateSaleItemValidatorTests
         // Arrange
         var item = new CreateSaleItemDto
         {
-            ProductId = Guid.Empty, // Invalid
-            ProductName = string.Empty, // Invalid
-            Quantity = 0, // Invalid
-            UnitPrice = 0.0m // Invalid
+            ProductId = null,
+            ProductName = string.Empty,
+            Quantity = 0,
+            UnitPrice = 0.0m
         };
 
         // Act

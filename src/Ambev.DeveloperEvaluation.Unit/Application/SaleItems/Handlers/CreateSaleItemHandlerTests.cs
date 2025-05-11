@@ -5,20 +5,23 @@ using FluentAssertions;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Application.SaleItems.CreateSaleItem;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.SaleItems.Handlers;
 
 public class CreateSaleItemHandlerTests
 {
     private readonly IMapper _mapper;
+    private readonly IEventBroker _eventBroker;
     private readonly ISaleItemRepository _saleItemRepository;
     private readonly CreateSaleItemHandler _handler;
 
     public CreateSaleItemHandlerTests()
     {
         _mapper = Substitute.For<IMapper>();
+        _eventBroker = Substitute.For<IEventBroker>();
         _saleItemRepository = Substitute.For<ISaleItemRepository>();
-        _handler = new CreateSaleItemHandler(_saleItemRepository, _mapper);
+        _handler = new CreateSaleItemHandler(_saleItemRepository, _eventBroker, _mapper);
     }
 
     [Trait("SaleItems", "Handler")]

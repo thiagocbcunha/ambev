@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers.TestData;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers;
 
@@ -13,13 +14,15 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers;
 /// </summary>
 public class DeleteSaleHandlerTests
 {
+    private readonly IEventBroker _eventBroker;
     private readonly ISaleRepository _saleRepository;
     private readonly DeleteSaleHandler _handler;
 
     public DeleteSaleHandlerTests()
     {
+        _eventBroker = Substitute.For<IEventBroker>();
         _saleRepository = Substitute.For<ISaleRepository>();
-        _handler = new DeleteSaleHandler(_saleRepository);
+        _handler = new DeleteSaleHandler(_saleRepository, _eventBroker);
     }
 
     [Trait("Sales", "Handler")]

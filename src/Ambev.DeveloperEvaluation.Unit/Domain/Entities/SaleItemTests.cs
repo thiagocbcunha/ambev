@@ -27,7 +27,7 @@ public class SaleItemTests
         saleItem.ProductName.Should().Be(productName);
         saleItem.Quantity.Should().Be(quantity);
         saleItem.UnitPrice.Should().Be(unitPrice);
-        saleItem.Discount.Should().Be(0);
+        saleItem.Discount.Should().Be(5);
     }
 
     [Trait("SaleItem", "Entity")]

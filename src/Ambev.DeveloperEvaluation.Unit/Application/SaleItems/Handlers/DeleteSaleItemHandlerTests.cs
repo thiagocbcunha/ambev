@@ -4,18 +4,21 @@ using FluentAssertions;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Application.SaleItems.DeleteSaleItem;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.SaleItems.Handlers;
 
 public class DeleteSaleItemHandlerTests
 {
+    private readonly IEventBroker _eventBroker;
     private readonly ISaleItemRepository _saleItemRepository;
     private readonly DeleteSaleItemHandler _handler;
 
     public DeleteSaleItemHandlerTests()
     {
+        _eventBroker = Substitute.For<IEventBroker>();
         _saleItemRepository = Substitute.For<ISaleItemRepository>();
-        _handler = new DeleteSaleItemHandler(_saleItemRepository);
+        _handler = new DeleteSaleItemHandler(_saleItemRepository, _eventBroker);
     }
 
     [Trait("SaleItems", "Handler")]

@@ -5,20 +5,23 @@ using FluentAssertions;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Application.SaleItems.PatchSaleItem;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.SaleItems.Handlers;
 
 public class ChangeSaleItemHandlerTests
 {
     private readonly IMapper _mapper;
+    private readonly IEventBroker _eventBroker;
     private readonly ISaleItemRepository _saleItemRepository;
     private readonly PatchSaleItemHandler _handler;
 
     public ChangeSaleItemHandlerTests()
     {
         _mapper = Substitute.For<IMapper>();
+        _eventBroker = Substitute.For<IEventBroker>();
         _saleItemRepository = Substitute.For<ISaleItemRepository>();
-        _handler = new PatchSaleItemHandler(_saleItemRepository, _mapper);
+        _handler = new PatchSaleItemHandler(_saleItemRepository, _eventBroker, _mapper);
     }
 
     [Trait("SaleItems", "Handler")]

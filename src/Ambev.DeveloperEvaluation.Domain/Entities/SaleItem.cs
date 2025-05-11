@@ -35,6 +35,8 @@ public class SaleItem
             ?? throw new ArgumentNullException(nameof(productName));
 
         ThrowIfIsInvalidSaleItem();
+
+        CalculateDiscount();
     }
 
     /// <summary>

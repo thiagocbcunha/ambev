@@ -10,6 +10,7 @@ using Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Handler.Sales;
 
@@ -19,6 +20,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Handler.Sales;
 public class CreateSaleHandlerTests
 {
     private readonly IMapper _mapper;
+    private readonly IEventBroker _eventBroker;
     private readonly ISaleRepository _saleRepository;
     private readonly IUserRepository _userRepository;
     private readonly CreateSaleHandler _handler;
@@ -26,9 +28,10 @@ public class CreateSaleHandlerTests
     public CreateSaleHandlerTests()
     {
         _mapper = Substitute.For<IMapper>();
+        _eventBroker = Substitute.For<IEventBroker>();
         _saleRepository = Substitute.For<ISaleRepository>();
         _userRepository = Substitute.For<IUserRepository>();
-        _handler = new CreateSaleHandler(_saleRepository, _userRepository, _mapper);
+        _handler = new CreateSaleHandler(_saleRepository, _userRepository, _eventBroker, _mapper);
     }
 
     [Trait("Sales", "Handler")]
