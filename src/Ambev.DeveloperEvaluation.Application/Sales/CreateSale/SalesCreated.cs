@@ -2,13 +2,14 @@ using MediatR;
 using AutoMapper;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 /// <summary>
 /// Handler for processing CreateSaleCommand requests.
 /// </summary>
-public class CreateSaleHandler(ISaleRepository saleRepository, IUserRepository userRepository, IMapper mapper) 
+public class CreateSaleHandler(ISaleRepository saleRepository, IUserRepository userRepository, IEventBroker eventBroker, IMapper mapper) 
     : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
     /// <summary>
@@ -31,6 +32,10 @@ public class CreateSaleHandler(ISaleRepository saleRepository, IUserRepository u
         var sale = mapper.Map<Sale>(command);
         var createdSale = await saleRepository.CreateAsync(sale, cancellationToken);
 
-        return mapper.Map<CreateSaleResult>(createdSale);
+        var result = mapper.Map<CreateSaleResult>(createdSale);
+
+        await eventBroker.PublishAsync(new SalesCreated(result));
+
+        return result;
     }
 }

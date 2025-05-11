@@ -2,13 +2,14 @@ using MediatR;
 using AutoMapper;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 
 /// <summary>
 /// Handler for processing <see cref="PatchSaleCommand"/> requests.
 /// </summary>
-public class PatchSaleHandler(ISaleRepository saleRepository, IUserRepository userRepository, IMapper mapper)
+public class PatchSaleHandler(ISaleRepository saleRepository, IUserRepository userRepository, IEventBroker eventBroker, IMapper mapper)
     : IRequestHandler<PatchSaleCommand, PatchSaleResult>
 {
     /// <summary>
@@ -42,7 +43,11 @@ public class PatchSaleHandler(ISaleRepository saleRepository, IUserRepository us
 
         await saleRepository.UpdateAsync(sale, cancellationToken);
 
-        return mapper.Map<PatchSaleResult>(sale);
+        var result = mapper.Map<PatchSaleResult>(sale);
+
+        await eventBroker.PublishAsync(new SaleChanged(result));
+
+        return result;
     }
 
     private async Task<Sale> GetSaleAsync(Guid id, CancellationToken cancellationToken)

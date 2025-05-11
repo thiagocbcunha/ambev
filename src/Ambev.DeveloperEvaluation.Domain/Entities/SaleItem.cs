@@ -102,6 +102,8 @@ public class SaleItem
     [NotMapped]
     public decimal TotalAmount => (UnitPrice * Quantity) - Discount;
 
+    public bool IsCancelled { get; private set; }
+
     /// <summary>
     /// Updates the sale item with new values.
     /// </summary>
@@ -153,5 +155,13 @@ public class SaleItem
             discount = MaxDiscount;
 
         Discount = UnitPrice * Quantity * discount;
+    }
+
+    /// <summary>
+    /// Cancels the sale Item.
+    /// </summary>
+    public void CancelSaleItem()
+    {
+        IsCancelled = true;
     }
 }

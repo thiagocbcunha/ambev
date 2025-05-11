@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250511193633_AddTablesSaleAndSaleItem")]
+    [Migration("20250511203452_AddTablesSaleAndSaleItem")]
     partial class AddTablesSaleAndSaleItem
     {
         /// <inheritdoc />
@@ -76,6 +76,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("numeric(18,2)");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ProductId")
                         .IsRequired()

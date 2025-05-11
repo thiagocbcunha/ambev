@@ -31,6 +31,9 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
             .HasColumnType("numeric(18,2)")
             .IsRequired();
 
+        builder.Property(s => s.IsCancelled)
+            .IsRequired();
+
         builder.Property(i => i.SaleId)
             .IsRequired();
 

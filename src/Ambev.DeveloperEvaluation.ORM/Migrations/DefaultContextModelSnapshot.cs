@@ -74,6 +74,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("numeric(18,2)");
 
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ProductId")
                         .IsRequired()
                         .HasColumnType("text");

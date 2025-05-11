@@ -1,5 +1,6 @@
 using MediatR;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Application.SaleItems.DeleteSaleItem;
 
@@ -8,7 +9,8 @@ namespace Ambev.DeveloperEvaluation.Application.SaleItems.DeleteSaleItem;
 /// Initializes a new instance of DeleteSaleHandler.
 /// </summary>
 /// <param name="saleRepository">The sale repository.</param>
-public class DeleteSaleItemHandler(ISaleItemRepository saleItemRepository) : IRequestHandler<DeleteSaleItemCommand, DeleteSaleItemResponse>
+/// <param name="eventBroker">The event broker.</param>
+public class DeleteSaleItemHandler(ISaleItemRepository saleItemRepository, IEventBroker eventBroker) : IRequestHandler<DeleteSaleItemCommand, DeleteSaleItemResponse>
 {
     /// <summary>
     /// Handles the DeleteSaleCommand request.
@@ -25,6 +27,8 @@ public class DeleteSaleItemHandler(ISaleItemRepository saleItemRepository) : IRe
 
         if (!success)
             throw new Exception($"Failed to delete SaleItem with ID {command.Id}.");
+
+        await eventBroker.PublishAsync(new SalesItemDeleted(command));
 
         return new DeleteSaleItemResponse { Success = true };
     }
