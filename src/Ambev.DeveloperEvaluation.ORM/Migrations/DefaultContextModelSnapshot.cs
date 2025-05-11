@@ -74,8 +74,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("ProductName")
                         .IsRequired()

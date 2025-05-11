@@ -46,12 +46,12 @@ public record CreateSaleCommand : IRequest<CreateSaleResult>
 /// <summary>
 /// DTO for sale items in the CreateSaleCommand.
 /// </summary>
-public class CreateSaleItemDto
+public record CreateSaleItemDto
 {
     /// <summary>
     /// Unique identifier for the product in the sale item.
     /// </summary>
-    public Guid ProductId { get; set; }
+    public required string ProductId { get; set; }
 
     /// <summary>
     /// The name of the product in the sale item.

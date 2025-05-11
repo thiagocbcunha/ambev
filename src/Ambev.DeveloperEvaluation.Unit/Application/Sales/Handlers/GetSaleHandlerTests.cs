@@ -31,7 +31,7 @@ public class GetSaleHandlerTests
     {
         // Given
         var command = GetSaleHandlerTestData.GenerateValidGetSaleCommand();
-        var sale = new Sale(999, DateTime.UtcNow.AddDays(-1), Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
+        var sale = new Sale(999, Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
 
         var result = new GetSaleResult
         {

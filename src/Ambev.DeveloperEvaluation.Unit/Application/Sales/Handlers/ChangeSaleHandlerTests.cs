@@ -4,28 +4,28 @@ using NSubstitute;
 using FluentAssertions;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Application.Sales.ChangeSale;
+using Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 using Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers.TestData;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers;
 
 /// <summary>
-/// Contains unit tests for the <see cref="ChangeSaleHandler"/> class.
+/// Contains unit tests for the <see cref="PatchSaleHandler"/> class.
 /// </summary>
 public class ChangeSaleHandlerTests
 {
     private readonly IMapper _mapper;
     private readonly ISaleRepository _saleRepository;
     private readonly IUserRepository _userRepository;
-    private readonly ChangeSaleHandler _handler;
+    private readonly PatchSaleHandler _handler;
 
     public ChangeSaleHandlerTests()
     {
         _mapper = Substitute.For<IMapper>();
         _saleRepository = Substitute.For<ISaleRepository>();
         _userRepository = Substitute.For<IUserRepository>();
-        _handler = new ChangeSaleHandler(_saleRepository, _userRepository, _mapper);
+        _handler = new PatchSaleHandler(_saleRepository, _userRepository, _mapper);
     }
 
     [Trait("Sales", "Handler")]
@@ -34,8 +34,8 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber, command.SaleDate, command.SallerId, command.CustomerId, command.BranchId, command.BranchName);
-        var result = new ChangeSaleResult
+        var sale = new Sale(command.SaleNumber.Value, command.SallerId.Value, command.CustomerId.Value, command.BranchId, command.BranchName);
+        var result = new PatchSaleResult
         {
             Id = sale.Id,
             SaleNumber = sale.SaleNumber,
@@ -48,14 +48,16 @@ public class ChangeSaleHandlerTests
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
-        _userRepository.GetByIdAsync(command.CustomerId, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.CustomerId, Status = UserStatus.Active });
-        _userRepository.GetByIdAsync(command.SallerId, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.SallerId, Role = UserRole.Seller, Status = UserStatus.Active });
+        _userRepository.GetByIdAsync(command.CustomerId.Value, Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.CustomerId.Value, Status = UserStatus.Active });
+
+        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.SallerId.Value, Role = UserRole.Seller, Status = UserStatus.Active });
+
         _saleRepository.UpdateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>())
             .Returns(sale);
 
-        _mapper.Map<ChangeSaleResult>(sale).Returns(result);
+        _mapper.Map<PatchSaleResult>(sale).Returns(result);
 
         // When
         var actualResult = await _handler.Handle(command, CancellationToken.None);
@@ -65,7 +67,6 @@ public class ChangeSaleHandlerTests
         actualResult.Should().BeEquivalentTo(result);
         await _saleRepository.Received(1).UpdateAsync(Arg.Is<Sale>(s =>
             s.SaleNumber == command.SaleNumber &&
-            s.SaleDate == command.SaleDate &&
             s.CustomerId == command.CustomerId &&
             s.BranchId == command.BranchId &&
             s.BranchName == command.BranchName), Arg.Any<CancellationToken>());
@@ -95,15 +96,15 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber, command.SaleDate, command.SallerId, Guid.NewGuid(), command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber.Value, command.SallerId.Value, Guid.NewGuid(), command.BranchId, command.BranchName);
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
         
-        _userRepository.GetByIdAsync(command.SallerId, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.SallerId, Role = UserRole.Seller, Status = UserStatus.Active });
+        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.SallerId.Value, Role = UserRole.Seller, Status = UserStatus.Active });
 
-        _userRepository.GetByIdAsync(command.CustomerId, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.CustomerId.Value, Arg.Any<CancellationToken>())
             .Returns((User?)null);
 
         // When
@@ -120,11 +121,12 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber, command.SaleDate, Guid.NewGuid(), command.CustomerId, command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber.Value, Guid.NewGuid(), command.CustomerId.Value, command.BranchId, command.BranchName);
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
-        _userRepository.GetByIdAsync(command.SallerId, Arg.Any<CancellationToken>())
+
+        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
             .Returns((User?)null);
 
         // When

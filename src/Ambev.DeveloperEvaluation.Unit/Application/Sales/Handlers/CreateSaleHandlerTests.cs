@@ -6,7 +6,7 @@ using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers.TestData;
-using Ambev.DeveloperEvaluation.Application.Sales.ChangeSale;
+using Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
@@ -37,7 +37,7 @@ public class CreateSaleHandlerTests
     {
         // Given
         var command = SalesHandlerTestData.GenerateValidCreateSaleCommand();
-        var sale = new Sale(command.SaleNumber, command.SaleDate, command.SallerId, command.CustomerId, command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber, command.SallerId, command.CustomerId, command.BranchId, command.BranchName);
 
         var result = new CreateSaleResult
         {
@@ -114,7 +114,7 @@ public class CreateSaleHandlerTests
     {
         // Given
         var command = SalesHandlerTestData.GenerateValidCreateSaleCommand();
-        var sale = new Sale(command.SaleNumber, command.SaleDate, command.SallerId, command.CustomerId, command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber, command.SallerId, command.CustomerId, command.BranchId, command.BranchName);
 
         _userRepository.GetByIdAsync(command.CustomerId, Arg.Any<CancellationToken>())
             .Returns(new User { Id = command.CustomerId, Status = UserStatus.Active });

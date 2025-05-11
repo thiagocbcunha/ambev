@@ -1,11 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class SaleItem
 {
-    internal SaleItem() { }
+    public const decimal MaxDiscount = 0.2m;
+    public const decimal MinDiscount = 0.1m;
+
+    public const int MaxQuantity = 20;
+    public const int AverageQuantity = 10;
+    public const int MinQuantityForDiscount = 4;
+
+    public SaleItem() { }
 
     /// <summary>
     /// Initializes a new instance of the SaleItem class.
@@ -14,17 +21,20 @@ public class SaleItem
     /// <param name="productName"></param>
     /// <param name="quantity"></param>
     /// <param name="unitPrice"></param>
-    /// <param name="discount"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public SaleItem(Guid productId, string productName, int quantity, decimal unitPrice, decimal discount)
+    public SaleItem(string productId, string productName, int quantity, decimal unitPrice)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(unitPrice);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+
         Quantity = quantity;
-        Discount = discount;
         ProductId = productId;
         UnitPrice = unitPrice;
 
         ProductName = productName 
             ?? throw new ArgumentNullException(nameof(productName));
+
+        ThrowIfIsInvalidSaleItem();
     }
 
     /// <summary>
@@ -34,10 +44,9 @@ public class SaleItem
     /// <param name="productName"></param>
     /// <param name="quantity"></param>
     /// <param name="unitPrice"></param>
-    /// <param name="discount"></param>
     /// <param name="saleId"></param>
-    public SaleItem(Guid productId, string productName, int quantity, decimal unitPrice, decimal discount, Guid saleId) 
-        : this(productId, productName, quantity, unitPrice, discount)
+    public SaleItem(string productId, string productName, int quantity, decimal unitPrice, Guid saleId) 
+        : this(productId, productName, quantity, unitPrice)
             => SaleId = saleId;
 
 
@@ -51,7 +60,7 @@ public class SaleItem
     /// Unique identifier for the product.
     /// </summary>
     [Required]
-    public Guid ProductId { get; private set; }
+    public string ProductId { get; private set; } = null!;
 
     /// <summary>
     /// Name of the product.
@@ -93,11 +102,56 @@ public class SaleItem
     [NotMapped]
     public decimal TotalAmount => (UnitPrice * Quantity) - Discount;
 
-    public void Update(string productName, int quantity, decimal unitPrice, decimal discount)
+    /// <summary>
+    /// Updates the sale item with new values.
+    /// </summary>
+    /// <param name="productName"></param>
+    /// <param name="quantity"></param>
+    /// <param name="unitPrice"></param>
+    public void Patch(string? productId, string? productName, int? quantity, decimal? unitPrice)
     {
-        Discount = discount;
-        Quantity = quantity;
-        UnitPrice = unitPrice;
-        ProductName = productName;
+        if(unitPrice is not null)
+            ArgumentOutOfRangeException.ThrowIfNegative(unitPrice.Value);
+
+        if(quantity is not null)
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity.Value);
+
+        Quantity = quantity ?? Quantity;
+        UnitPrice = unitPrice ?? UnitPrice;
+        ProductId = productId ?? ProductId;
+        ProductName = productName ?? ProductName;
+
+        ThrowIfIsInvalidSaleItem();
+
+        CalculateDiscount();
+    }
+
+    /// <summary>
+    /// Validates the sale item.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public void ThrowIfIsInvalidSaleItem()
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(UnitPrice);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(Quantity);
+
+        if (Quantity > MaxQuantity)
+            throw new ArgumentOutOfRangeException(nameof(Quantity), "Quantity cannot exceed 20.");
+    }
+
+    /// <summary>
+    /// Calculates the discount based on the quantity of items sold.
+    /// </summary>
+    private void CalculateDiscount()
+    {
+        var discount = 0m;
+
+        if(Quantity >= MinQuantityForDiscount && Quantity < AverageQuantity)
+            discount = MinDiscount;
+
+        if(Quantity >= AverageQuantity && Quantity <= MaxQuantity)
+            discount = MaxDiscount;
+
+        Discount = UnitPrice * Quantity * discount;
     }
 }

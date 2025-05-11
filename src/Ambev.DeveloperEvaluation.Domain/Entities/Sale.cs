@@ -20,12 +20,12 @@ public class Sale
     /// <param name="branchId"></param>
     /// <param name="branchName"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public Sale(int saleNumber, DateTime saleDate, Guid sallerId, Guid customerId, string branchId, string branchName)
+    public Sale(int saleNumber, Guid sallerId, Guid customerId, string branchId, string branchName)
     {
-        SaleDate = saleDate;
         SallerId = sallerId;
         SaleNumber = saleNumber;
         CustomerId = customerId;
+        SaleDate = DateTime.Now;
 
         BranchId = branchId 
             ?? throw new ArgumentNullException(nameof(branchId));
@@ -114,15 +114,13 @@ public class Sale
     /// <param name="productName"></param>
     /// <param name="quantity"></param>
     /// <param name="unitPrice"></param>
-    /// <param name="discount"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public void AddItem(Guid productId, string productName, int quantity, decimal unitPrice, decimal discount)
+    public void AddItem(string productId, string productName, int quantity, decimal unitPrice)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(discount);
         ArgumentOutOfRangeException.ThrowIfNegative(unitPrice);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
 
-        Items.Add(new SaleItem(productId, productName, quantity, unitPrice, discount));
+        Items.Add(new SaleItem(productId, productName, quantity, unitPrice));
     }
 
     /// <summary>
@@ -146,17 +144,21 @@ public class Sale
         return total;
     }
 
-    public void Update(int saleNumber, DateTime saleDate, Guid sallerId, Guid customerId, string branchId, string branchName)
+    /// <summary>
+    /// Update Sale register.
+    /// </summary>
+    /// <param name="saleNumber"></param>
+    /// <param name="sallerId"></param>
+    /// <param name="customerId"></param>
+    /// <param name="branchId"></param>
+    /// <param name="branchName"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void Patch(int? saleNumber, Guid? sallerId, Guid? customerId, string? branchId, string? branchName)
     {
-        SaleDate = saleDate;
-        SallerId = sallerId;
-        CustomerId = customerId;
-        SaleNumber = saleNumber;
-
-        BranchId = branchId 
-            ?? throw new ArgumentNullException(nameof(branchId));
-
-        BranchName = branchName 
-            ?? throw new ArgumentNullException(nameof(branchName));
+        SallerId = sallerId ?? SallerId;
+        BranchId = branchId ?? BranchId;
+        CustomerId = customerId ?? CustomerId;
+        SaleNumber = saleNumber ?? SaleNumber;
+        BranchName = branchName ?? BranchName;
     }
 }

@@ -1,5 +1,5 @@
 using Bogus;
-using Ambev.DeveloperEvaluation.Application.Sales.ChangeSale;
+using Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers.TestData;
 
@@ -8,10 +8,9 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Sales.Handlers.TestData;
 /// </summary>
 public static class ChangeSaleHandlerTestData
 {
-    private static readonly Faker<ChangeSaleCommand> changeSaleFaker = new Faker<ChangeSaleCommand>()
+    private static readonly Faker<PatchSaleCommand> changeSaleFaker = new Faker<PatchSaleCommand>()
         .RuleFor(s => s.Id, f => Guid.NewGuid())
         .RuleFor(s => s.SaleNumber, f => f.Random.Int(1, 1000))
-        .RuleFor(s => s.SaleDate, f => f.Date.Past())
         .RuleFor(s => s.SallerId, f => Guid.NewGuid())
         .RuleFor(s => s.CustomerId, f => Guid.NewGuid())
         .RuleFor(s => s.BranchId, f => f.Random.String2(5, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
@@ -20,7 +19,7 @@ public static class ChangeSaleHandlerTestData
     /// <summary>
     /// Generates a valid ChangeSaleCommand.
     /// </summary>
-    public static ChangeSaleCommand GenerateValidChangeSaleCommand()
+    public static PatchSaleCommand GenerateValidChangeSaleCommand()
     {
         return changeSaleFaker.Generate();
     }

@@ -23,7 +23,7 @@ public class CreateSaleItemValidatorTests
         // Arrange
         var item = new CreateSaleItemDto
         {
-            ProductId = Guid.NewGuid(),
+            ProductId = Guid.NewGuid().ToString(),
             ProductName = "Product A",
             Quantity = 1,
             UnitPrice = 10.0m

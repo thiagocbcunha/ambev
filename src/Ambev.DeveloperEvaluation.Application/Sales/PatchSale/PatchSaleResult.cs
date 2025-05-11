@@ -1,11 +1,9 @@
-using MediatR;
-
-namespace Ambev.DeveloperEvaluation.Application.Sales.ChangeSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 
 /// <summary>
-/// Command for updating an existing sale.
+/// Result returned after successfully updating a sale.
 /// </summary>
-public record ChangeSaleCommand : IRequest<ChangeSaleResult>
+public record PatchSaleResult
 {
     /// <summary>
     /// Unique identifier for the sale.
@@ -28,17 +26,17 @@ public record ChangeSaleCommand : IRequest<ChangeSaleResult>
     public Guid CustomerId { get; set; }
 
     /// <summary>
-    /// Unique identifier for the customer.
+    /// Unique identifier for the seller.
     /// </summary>
     public Guid SallerId { get; set; }
 
     /// <summary>
     /// Unique identifier for the branch.
     /// </summary>
-    public string BranchId { get; set; } = null!;
+    public string BranchName { get; set; } = null!;
 
     /// <summary>
-    /// Name of the branch.
+    /// List of items in the sale.
     /// </summary>
-    public string BranchName { get; set; } = null!;
+    public decimal TotalAmount { get; set; }
 }

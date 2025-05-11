@@ -19,7 +19,7 @@ public static class SalesHandlerTestData
         {
             new CreateSaleItemDto
             {
-                ProductId = Guid.NewGuid(),
+                ProductId = Guid.NewGuid().ToString(),
                 ProductName = f.Commerce.ProductName(),
                 Quantity = f.Random.Int(1, 10),
                 UnitPrice = f.Random.Decimal(1, 100)

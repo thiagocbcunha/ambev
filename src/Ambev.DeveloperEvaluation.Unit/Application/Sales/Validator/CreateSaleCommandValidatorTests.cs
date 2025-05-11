@@ -33,7 +33,7 @@ public class CreateSaleCommandValidatorTests
             [
                 new()
                 {
-                    ProductId = Guid.NewGuid(),
+                    ProductId = Guid.NewGuid().ToString(),
                     ProductName = "Product A",
                     Quantity = 1,
                     UnitPrice = 10.0m

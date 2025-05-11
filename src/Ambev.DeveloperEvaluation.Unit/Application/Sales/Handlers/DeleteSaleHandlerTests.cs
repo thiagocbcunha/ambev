@@ -29,7 +29,7 @@ public class DeleteSaleHandlerTests
         // Given
         var command = DeleteSaleHandlerTestData.GenerateValidDeleteSaleCommand();
 
-        var sale = new Sale(999, DateTime.UtcNow.AddDays(-1), Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
+        var sale = new Sale(999, Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
@@ -52,7 +52,7 @@ public class DeleteSaleHandlerTests
     {
         // Given
         var command = DeleteSaleHandlerTestData.GenerateValidDeleteSaleCommand();
-        var sale = new Sale(999, DateTime.UtcNow.AddDays(-1), Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
+        var sale = new Sale(999, Guid.NewGuid(), Guid.NewGuid(), "BR001", "Main Branch");
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);

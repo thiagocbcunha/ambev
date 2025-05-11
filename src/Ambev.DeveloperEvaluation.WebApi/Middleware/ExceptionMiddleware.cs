@@ -11,6 +11,10 @@ public class ExceptionMiddleware(RequestDelegate next)
         {
             await next(context);
         }
+        catch (Exception ex) when (ex is ArgumentOutOfRangeException exception)
+        {
+            await HandlerArgumentOutOfRangeExceptionAsync(context, exception);
+        }
         catch (Exception ex) when (ex is InvalidOperationException exception)
         {
             await HandlerInvalidOperationExceptionAsync(context, exception);
@@ -22,11 +26,22 @@ public class ExceptionMiddleware(RequestDelegate next)
         catch (Exception ex) when (ex is KeyNotFoundException exception)
         {
             await HandlerNotFountExceptionAsync(context, exception);
-        }
+        }        
         catch (Exception ex)
         {
             await HandlerGenericExceptionAsync(context);
         }
+    }
+
+    private static Task HandlerArgumentOutOfRangeExceptionAsync(HttpContext context, ArgumentOutOfRangeException ex)
+    {
+        var response = new ApiResponse
+        {
+            Success = false,
+            Message = ex.Message,
+        };
+
+        return WriteResponse(context, response, StatusCodes.Status406NotAcceptable);
     }
 
     /// <summary>
