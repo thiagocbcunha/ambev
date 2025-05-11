@@ -1,11 +1,7 @@
-using MediatR;
 using Serilog;
-using Microsoft.EntityFrameworkCore;
 using Ambev.DeveloperEvaluation.IoC;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.Common.Logging;
-using Ambev.DeveloperEvaluation.Common.Security;
-using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.WebApi.Middleware;
 using Ambev.DeveloperEvaluation.Common.HealthChecks;
 
@@ -27,6 +23,7 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.ConfigureMigration();
     }
 
     app.UseHttpsRedirection();
