@@ -22,7 +22,7 @@
         "REDIS_PASSWORD": "ev@luAt10n"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7181;http://localhost:5119"
+      "applicationUrl": "https://localhost:8082;http://localhost:8083"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -50,7 +50,9 @@
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080",
         "REDIS_USERNAME": "developer",
-        "REDIS_PASSWORD": "ev@luAt10n"
+        "REDIS_PASSWORD": "ev@luAt10n",
+        "ConnectionStrings__DefaultConnection":"Host=ambev.developerevaluation.database;Database=developer_evaluation;Username=developer;Password=ev@luAt10n",
+        "RedisSettings__Endpoints":"ambev.developerevaluation.cache,ambev.developerevaluation.cache_instance_2"
       },
       "publishAllPorts": true,
       "useSSL": true

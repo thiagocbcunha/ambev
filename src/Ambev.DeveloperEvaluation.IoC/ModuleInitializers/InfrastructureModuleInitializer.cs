@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.Infra;
 using Ambev.DeveloperEvaluation.Common.Redis;
 using Ambev.DeveloperEvaluation.Common.Cache;
 
@@ -11,6 +12,7 @@ public class InfrastructureModuleInitializer : IModuleInitializer
     {
         builder.Services.AddProxyCache();
         builder.Services.AddORM(builder.Configuration);
+        builder.Services.AddInfra(builder.Configuration);
         builder.Services.AddRedis(builder.Configuration);
     }
 }
