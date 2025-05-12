@@ -32,6 +32,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C361795D-30EF-4513-B313-8622BE1AD313}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\Ambev.postman_collection.json = ..\Ambev.postman_collection.json
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ambev.DeveloperEvaluation.ORM", "Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj", "{02F8F40A-1F23-DDA4-42B6-0EBDDAB8E6B3}"

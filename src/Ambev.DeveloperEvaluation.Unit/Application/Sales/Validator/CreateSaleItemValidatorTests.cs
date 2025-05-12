@@ -43,7 +43,7 @@ public class CreateSaleItemValidatorTests
         // Arrange
         var item = new CreateSaleItemDto
         {
-            ProductId = null,
+            ProductId = null!,
             ProductName = string.Empty,
             Quantity = 0,
             UnitPrice = 0.0m

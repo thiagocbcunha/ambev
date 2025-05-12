@@ -1,0 +1,731 @@
+{
+	"info": {
+		"_postman_id": "cdd1b676-8efb-4f37-99fc-80095c5cc455",
+		"name": "Ambev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7614364",
+		"_collection_link": "https://blue-robot-9832.postman.co/workspace/Ambev~ed4d5674-322c-43e3-b801-b68396b6d673/collection/7614364-cdd1b676-8efb-4f37-99fc-80095c5cc455?action=share&source=collection_link&creator=7614364"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create Customer Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"user-customer-id\", response.data.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"user_customer\",\r\n  \"password\": \"964782Abc@\",\r\n  \"phone\": \"61993552200\",\r\n  \"email\": \"user_customer2@gmail.com\",\r\n  \"status\": 1,\r\n  \"role\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/Users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Users"
+							]
+						},
+						"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:53608/api/Users' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"username\": \"thiagocbcunha\",\r\n  \"password\": \"831596Fcu!\",\r\n  \"phone\": \"61993512203\",\r\n  \"email\": \"thiagocbcunha@gmail.com\",\r\n  \"status\": 1,\r\n  \"role\": 3\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Seller Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"user-seller-id\", response.data.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"user_saller\",\r\n  \"password\": \"964782Abc@\",\r\n  \"phone\": \"61993552200\",\r\n  \"email\": \"user_seller2@gmail.com\",\r\n  \"status\": 1,\r\n  \"role\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/Users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Users"
+							]
+						},
+						"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:53608/api/Users' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"username\": \"thiagocbcunha\",\r\n  \"password\": \"831596Fcu!\",\r\n  \"phone\": \"61993512203\",\r\n  \"email\": \"thiagocbcunha@gmail.com\",\r\n  \"status\": 1,\r\n  \"role\": 3\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/Users/:IdUser",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								":IdUser"
+							],
+							"variable": [
+								{
+									"key": "IdUser",
+									"value": "{{user-seller-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:53608/api/Users/27cef60b-f720-48e3-b344-58d4fd18799f' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/Users/:IdUser",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								":IdUser"
+							],
+							"variable": [
+								{
+									"key": "IdUser",
+									"value": "{{user-customer-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'DELETE' \\\r\n  'https://localhost:7181/api/Users/27cef60b-f720-48e3-b344-58d4fd18799f' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sale",
+			"item": [
+				{
+					"name": "Create Sale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"sale-id\", response.data.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleNumber\": 10,\r\n  \"saleDate\": \"2025-05-11T03:36:16.341Z\",\r\n  \"customerId\": \"{{user-customer-id}}\",\r\n  \"sallerId\": \"{{user-seller-id}}\",\r\n  \"branchId\": \"filial_0001\",\r\n  \"branchName\": \"Filial Brasília\",\r\n  \"items\": [\r\n    {\r\n      \"productId\": \"notebook-1162-4ecc-8246-ec46de789100\",\r\n      \"productName\": \"Notebook\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 3500.00\r\n    },\r\n    {\r\n      \"productId\": \"monitor-1162-4ecc-8246-ec46de789101\",\r\n      \"productName\": \"Monitor\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 1500.00\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/Sales",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							]
+						},
+						"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:8081/api/Sales' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleNumber\": 0,\r\n  \"saleDate\": \"2025-05-11T03:36:16.341Z\",\r\n  \"customerId\": \"thiagocbcunha\",\r\n  \"customerName\": \"Thiago Cardoso Barbosa\",\r\n  \"branchId\": \"filial_0001\",\r\n  \"branchName\": \"Filial Brasília\",\r\n  \"items\": [\r\n    {\r\n      \"productId\": \"guid00001\",\r\n      \"productName\": \"Notebook\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 3500.00\r\n    },\r\n    {\r\n      \"productId\": \"guid00002\",\r\n      \"productName\": \"Monitor\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 1500.00\r\n    }\r\n  ]\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sale",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/Sales/:saleId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Sales",
+								":saleId"
+							],
+							"variable": [
+								{
+									"key": "saleId",
+									"value": "{{sale-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:8081/api/Sales/34b8f0ca-367b-4c06-bdbe-fde23798b139' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				},
+				{
+					"name": "Put Sale",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleNumber\": 0,\r\n  \"customerId\": \"{{user-customer-id}}\",\r\n  \"sallerId\": \"{{user-seller-id}}\",\r\n  \"branchId\": \"000012-patchbranchid\",\r\n  \"branchName\": \"Patch Branch Name\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/Sales/:SaleId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Sales",
+								":SaleId"
+							],
+							"variable": [
+								{
+									"key": "SaleId",
+									"value": "{{sale-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:8081/api/Sales/34b8f0ca-367b-4c06-bdbe-fde23798b139' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"id\": \"34b8f0ca-367b-4c06-bdbe-fde23798b139\",\r\n  \"saleNumber\": 20,\r\n  \"saleDate\": \"2025-05-11T03:46:38.513Z\",\r\n  \"customerId\": \"34b8f0ca-367b-4c06-bdbe-fde23798b140\",\r\n  \"customerName\": \"Thiago CB Cunha\",\r\n  \"branchId\": \"34b8f0ca-367b-4c06-bdbe-fde23798b150\",\r\n  \"branchName\": \"Filial Paranoá-DF\"\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sale",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/Sales/:SaleId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"Sales",
+								":SaleId"
+							],
+							"variable": [
+								{
+									"key": "SaleId",
+									"value": "{{sale-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'DELETE' \\\r\n  'https://localhost:8081/api/Sales/0a889f57-bef5-4ef9-bf78-e9a5eb804ae2' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sale Item",
+			"item": [
+				{
+					"name": "Create Sale Items",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": \"{{sale-id}}\",\r\n  \"productId\": \"teclado_mouse-1162-4ecc-8246-ec46de789101\",\r\n  \"productName\": \"Kit Teclado Mouse\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 250.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems"
+							]
+						},
+						"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7181/api/SalesItems' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleId\": \"4b612b93-b42b-47e7-a758-8ae2677f7248\",\r\n  \"productId\": \"fe656287-1162-4ecc-8246-ec46de789101\",\r\n  \"productName\": \"Kit Teclado Mouse\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 250.00\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sale Items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"sale-item-id\", response.data[0].id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/all-by-sale/:SaleId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								"all-by-sale",
+								":SaleId"
+							],
+							"variable": [
+								{
+									"key": "SaleId",
+									"value": "{{sale-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:7181/api/SalesItems/all-by-sale/4b612b93-b42b-47e7-a758-8ae2677f7248' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				},
+				{
+					"name": "Put Sale Item [Discount 0]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": \"{{sale-id}}\",\r\n  \"productId\": \"monitor-legal-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Monitor Legal\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 3000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/:SaleitemId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								":SaleitemId"
+							],
+							"variable": [
+								{
+									"key": "SaleitemId",
+									"value": "{{sale-item-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7181/api/SalesItems/b89244e4-b0de-47b5-97d0-7725d516161a' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleId\": \"4b612b93-b42b-47e7-a758-8ae2677f7248\",\r\n  \"productId\": \"fe656287-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Notebook\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 3000.00,\r\n  \"discount\": 1000.00\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Put Sale Item [Discount 10]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": \"{{sale-id}}\",\r\n  \"productId\": \"monitor-legal-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Monitor Legal\",\r\n  \"quantity\": 4,\r\n  \"unitPrice\": 3000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/:SaleitemId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								":SaleitemId"
+							],
+							"variable": [
+								{
+									"key": "SaleitemId",
+									"value": "{{sale-item-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7181/api/SalesItems/b89244e4-b0de-47b5-97d0-7725d516161a' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleId\": \"4b612b93-b42b-47e7-a758-8ae2677f7248\",\r\n  \"productId\": \"fe656287-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Notebook\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 3000.00,\r\n  \"discount\": 1000.00\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Put Sale Item [Discount 20]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": \"{{sale-id}}\",\r\n  \"productId\": \"monitor-legal-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Monitor Legal\",\r\n  \"quantity\": 20,\r\n  \"unitPrice\": 3000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/:SaleitemId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								":SaleitemId"
+							],
+							"variable": [
+								{
+									"key": "SaleitemId",
+									"value": "{{sale-item-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7181/api/SalesItems/b89244e4-b0de-47b5-97d0-7725d516161a' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleId\": \"4b612b93-b42b-47e7-a758-8ae2677f7248\",\r\n  \"productId\": \"fe656287-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Notebook\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 3000.00,\r\n  \"discount\": 1000.00\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Put Sale Item [Exceed Max Items]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": \"{{sale-id}}\",\r\n  \"productId\": \"monitor-legal-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Monitor Legal\",\r\n  \"quantity\": 21,\r\n  \"unitPrice\": 3000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/:SaleitemId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								":SaleitemId"
+							],
+							"variable": [
+								{
+									"key": "SaleitemId",
+									"value": "{{sale-item-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7181/api/SalesItems/b89244e4-b0de-47b5-97d0-7725d516161a' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"saleId\": \"4b612b93-b42b-47e7-a758-8ae2677f7248\",\r\n  \"productId\": \"fe656287-1162-4ecc-8246-ec46de789100\",\r\n  \"productName\": \"Notebook\",\r\n  \"quantity\": 2,\r\n  \"unitPrice\": 3000.00,\r\n  \"discount\": 1000.00\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sale Item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{base-url}}/api/SalesItems/:SaleitemId",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"api",
+								"SalesItems",
+								":SaleitemId"
+							],
+							"variable": [
+								{
+									"key": "SaleitemId",
+									"value": "{{sale-item-id}}"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X 'DELETE' \\\r\n  'https://localhost:7181/api/SalesItems/b89244e4-b0de-47b5-97d0-7725d516161a' \\\r\n  -H 'accept: text/plain'"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base-url",
+			"value": "https://localhost:7181",
+			"type": "string"
+		},
+		{
+			"key": "user-seller-id",
+			"value": ""
+		},
+		{
+			"key": "user-customer-id",
+			"value": ""
+		},
+		{
+			"key": "sale-id",
+			"value": ""
+		},
+		{
+			"key": "sale-item-id",
+			"value": ""
+		}
+	]
+}

@@ -21,9 +21,14 @@ public record GetSaleResult
     public DateTime SaleDate { get; set; }
 
     /// <summary>
-    /// Name of the customer.
+    /// Unique identifier for the customer.
     /// </summary>
-    public string CustomerName { get; set; } = null!;
+    public Guid CustomerId { get; set; }
+
+    /// <summary>
+    /// Unique identifier for the seller.
+    /// </summary>
+    public Guid SellerId { get; set; }
 
     /// <summary>
     /// Name of the branch.

@@ -1,8 +1,8 @@
 using MediatR;
 using AutoMapper;
+using Ambev.DeveloperEvaluation.Domain.Services;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Domain.Services;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 
@@ -21,9 +21,9 @@ public class PatchSaleHandler(ISaleRepository saleRepository, IUserRepository us
     /// <exception cref="KeyNotFoundException"></exception>
     public async Task<PatchSaleResult> Handle(PatchSaleCommand command, CancellationToken cancellationToken)
     {
-        // Somente para fins didáticos, poderíamos executar as três task, onde uma não depende
-        // da outra, de forma simutânea, contudo o EF tem uma limitação. Ele não deixa isso acontecer.
-        // Isso acontence para que o dbcontext não seja corrompido.
+        // For educational purposes only, we could execute the three tasks — which are independent from each other — simultaneously.
+        // However, Entity Framework imposes a limitation: it does not allow this to happen.
+        // This restriction exists to prevent the DbContext from becoming corrupted.
         //var saleTask = GetSaleAsync(command.Id, cancellationToken);
         //var sellerTask = GetSallerIdAsync(command.SallerId, cancellationToken);
         //var customerTask = GetCustomerIdAsync(command.CustomerId, cancellationToken);        
@@ -32,7 +32,7 @@ public class PatchSaleHandler(ISaleRepository saleRepository, IUserRepository us
         var sale = await GetSaleAsync(command.Id, cancellationToken);
         var seller = await GetSallerIdAsync(command.SallerId, cancellationToken);
         var customer = await GetCustomerIdAsync(command.CustomerId, cancellationToken);
-        // Com isso temos que de fato executa cada task uma seguida da outra, mesmo que não sejam dependentes.
+        // As a result, we are effectively required to execute each task sequentially, even if they are not dependent on one another.
 
         sale.Patch(
             command.SaleNumber,

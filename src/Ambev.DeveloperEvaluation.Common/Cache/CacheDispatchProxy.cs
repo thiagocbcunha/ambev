@@ -32,7 +32,11 @@ public class CacheDispatchProxy : DispatchProxy
     /// <param name="args"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
+#pragma warning disable CS8610 // Nullability of reference types in type of parameter doesn't match overridden member.
+#pragma warning disable CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
     protected override object? Invoke(MethodInfo method, object[] args)
+#pragma warning restore CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
+#pragma warning restore CS8610 // Nullability of reference types in type of parameter doesn't match overridden member.
     {
         DelegateInfo delegateInfo = GetOrCreateDelegate(method);
 

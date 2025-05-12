@@ -27,7 +27,7 @@ public class ExceptionMiddleware(RequestDelegate next)
         {
             await HandlerNotFountExceptionAsync(context, exception);
         }        
-        catch (Exception ex)
+        catch (Exception)
         {
             await HandlerGenericExceptionAsync(context);
         }

@@ -38,7 +38,6 @@ public class GetSaleHandlerTests
             Id = sale.Id,
             SaleNumber = sale.SaleNumber,
             SaleDate = sale.SaleDate,
-            CustomerName = "John Doe",
             BranchName = sale.BranchName,
             TotalAmount = 100.0m,
             Items = new List<GetSaleItemDto>()

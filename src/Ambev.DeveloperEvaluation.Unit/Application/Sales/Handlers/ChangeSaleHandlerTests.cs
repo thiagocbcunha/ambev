@@ -37,7 +37,7 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber.Value, command.SallerId.Value, command.CustomerId.Value, command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber ?? 123, command.SallerId ?? Guid.NewGuid(), command.CustomerId ?? Guid.NewGuid(), command.BranchId ?? "123", command.BranchName ?? "123");
         var result = new PatchSaleResult
         {
             Id = sale.Id,
@@ -51,11 +51,11 @@ public class ChangeSaleHandlerTests
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
-        _userRepository.GetByIdAsync(command.CustomerId.Value, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.CustomerId.Value, Status = UserStatus.Active });
+        _userRepository.GetByIdAsync(command.CustomerId ?? Guid.NewGuid(), Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.CustomerId ?? Guid.NewGuid(), Status = UserStatus.Active });
 
-        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.SallerId.Value, Role = UserRole.Seller, Status = UserStatus.Active });
+        _userRepository.GetByIdAsync(command.SallerId ?? Guid.NewGuid(), Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.SallerId ?? Guid.NewGuid(), Role = UserRole.Seller, Status = UserStatus.Active });
 
         _saleRepository.UpdateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>())
             .Returns(sale);
@@ -99,15 +99,15 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber.Value, command.SallerId.Value, Guid.NewGuid(), command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber ?? 123, command.SallerId ?? Guid.NewGuid(), command.CustomerId ?? Guid.NewGuid(), command.BranchId ?? "123", command.BranchName ?? "123");
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
         
-        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
-            .Returns(new User { Id = command.SallerId.Value, Role = UserRole.Seller, Status = UserStatus.Active });
+        _userRepository.GetByIdAsync(command.SallerId ?? Guid.NewGuid(), Arg.Any<CancellationToken>())
+            .Returns(new User { Id = command.SallerId ?? Guid.NewGuid(), Role = UserRole.Seller, Status = UserStatus.Active });
 
-        _userRepository.GetByIdAsync(command.CustomerId.Value, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.CustomerId ?? Guid.NewGuid(), Arg.Any<CancellationToken>())
             .Returns((User?)null);
 
         // When
@@ -124,12 +124,12 @@ public class ChangeSaleHandlerTests
     {
         // Given
         var command = ChangeSaleHandlerTestData.GenerateValidChangeSaleCommand();
-        var sale = new Sale(command.SaleNumber.Value, Guid.NewGuid(), command.CustomerId.Value, command.BranchId, command.BranchName);
+        var sale = new Sale(command.SaleNumber ?? 123, command.SallerId ?? Guid.NewGuid(), command.CustomerId ?? Guid.NewGuid(), command.BranchId ?? "123", command.BranchName ?? "123");
 
         _saleRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(sale);
 
-        _userRepository.GetByIdAsync(command.SallerId.Value, Arg.Any<CancellationToken>())
+        _userRepository.GetByIdAsync(command.SallerId ?? Guid.NewGuid(), Arg.Any<CancellationToken>())
             .Returns((User?)null);
 
         // When
